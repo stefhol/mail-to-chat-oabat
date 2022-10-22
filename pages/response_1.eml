@@ -1,0 +1,649 @@
+Return-Path: <veit.heller@oabat.de>
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mx2fbd.netcup.net
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=7.0 tests=AC_DIV_BONANZA,DKIM_SIGNED,
+	DKIM_VALID,HTML_FONT_LOW_CONTRAST,HTML_MESSAGE,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_KAM_HTML_FONT_INVALID,
+	T_REMOTE_IMAGE autolearn=ham autolearn_force=no version=3.4.2
+X-Original-To: user-628ef3f0-7620-4953-8573-cf18e5c55445@oabmail.de
+Delivered-To: all@oabmail.de
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	by mx2fbd.netcup.net (Postfix) with ESMTPS id EA82F1009D8
+	for <user-628ef3f0-7620-4953-8573-cf18e5c55445@oabmail.de>; Mon,  1 Aug 2022 10:18:58 +0200 (CEST)
+Authentication-Results: mx2fbd;
+	dkim=pass header.d=oabat-de.20210112.gappssmtp.com;
+        spf=pass (sender IP is 209.85.218.51) smtp.mailfrom=veit.heller@oabat.de smtp.helo=mail-ej1-f51.google.com
+Received-SPF: pass (mx2fbd: domain of oabat.de designates 209.85.218.51 as permitted sender) client-ip=209.85.218.51; envelope-from=veit.heller@oabat.de; helo=mail-ej1-f51.google.com;
+Received: by mail-ej1-f51.google.com with SMTP id rq15so12891901ejc.10
+        for <user-628ef3f0-7620-4953-8573-cf18e5c55445@oabmail.de>; Mon, 01 Aug 2022 01:18:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oabat-de.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=OdqZEuHu0a7cFfLFjrb6bzqsrlXon36BiL4n05P1MCE=;
+        b=HYO9h5ugUBeYrSaUb0qK8ldZr70Ey4aQWGrEYkISZb+tiE+VFWV7tOJLmP+t21Fzao
+         V9F2zPiqo1pLQTmUn4jqmEHIa7NgTCz+IrhICMEffY4klbNecDQNdLKfddUrzcOOkIdT
+         ufvi7mWd7PNsPWZf4fJB9jMCMEEykAICDEFlOisI9KBpgtGFI0/+PiJki+GDiBgB6gdh
+         ++fpZQr4yMBhxabhG/GUmYSFlL6pzOUNdTE1puQ517V8EJ8XfZGlAV7AjZT08C137rlO
+         QzGDF4uz1d8EhmDUB7R6LhfKsjsoW5D1DplpTOlkM0uDAQZ5sGO5m+GJCuZUuooP7G0w
+         DlRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=OdqZEuHu0a7cFfLFjrb6bzqsrlXon36BiL4n05P1MCE=;
+        b=ImxWQGrMGuojXwCtzHZEXdrr4dmZ6qRmIGr3353PUKThT1Azij7rEg7GT1wEcQua0e
+         S2CSniZKbZnVKDEDHH2S6b1kDUq3Y03CzhVWMapxbfEf6n2zYJazxP6PfYgMO8C6XpTg
+         vjV3pqDQGJbpRdBMpz+yp1AUIYUd5gyZNiAj2nFBhLQcTdPs05e2YbJ0H884YaJJH/Pl
+         AktVVko2IzER+qgHVe5Xnh63T2jsaZfDvluSLjMI6MLk+zWyssXNGYJ6MNIWwUJ4ve5g
+         ZTATMlOKsN13vzh/ZQ5zpsOBlyQyiGtlpPIYwTuRzDBMeTEa5AN6VXVoUvkp7dknna50
+         0JoQ==
+X-Gm-Message-State: AJIora+nmoH9J43yZZtn2XFM2Ev2AumKidKJVmppwHOR1y4vFNU81fbX
+	y80aJqueiAnY8mpob6H/jrFWGnr35ZFa8jzxCbdcVIVw4ThgxQ==
+X-Google-Smtp-Source: AGRyM1sAZ2jmuIU18Gexy2WsYCHS1peIRcdmMhIQsg20iQn59sWF75GNA+W8UW4mZNFg82qYreFx09m+YuNojDGWiyM=
+X-Received: by 2002:a17:907:7fa9:b0:72f:36fd:ef89 with SMTP id
+ qk41-20020a1709077fa900b0072f36fdef89mr11862681ejc.433.1659341937524; Mon, 01
+ Aug 2022 01:18:57 -0700 (PDT)
+MIME-Version: 1.0
+References: <01020182587b4931-010ccb36-d486-4fc6-a477-4c6568f79f5b-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020182587b4931-010ccb36-d486-4fc6-a477-4c6568f79f5b-000000@eu-west-1.amazonses.com>
+From: Veit Heller <veit.heller@oabat.de>
+Date: Mon, 1 Aug 2022 10:18:41 +0200
+Message-ID: <CACcjMigYHHEvN8PmUoJ-mscc97bvk8P0snY3jqjNHfrXcN0BNw@mail.gmail.com>
+Subject: Re: Neue Nachricht von Rainer Zufall
+To: =?UTF-8?Q?Rainer_Zufall_=C3=BCber_Oabat?= <user-628ef3f0-7620-4953-8573-cf18e5c55445@oabmail.de>
+Content-Type: multipart/alternative; boundary="000000000000bf617a05e529a634"
+X-Rspamd-Server: rspamd-worker-8401
+X-Spamd-Result: default: False [-1.33 / 15.00];
+	 ARC_NA(0.00)[];
+	 R_DKIM_ALLOW(-0.20)[oabat-de.20210112.gappssmtp.com:s=20210112];
+	 URIBL_BLOCKED(0.00)[instagram.com:url,oabat.de:email,oabat.de:url,oabat-de.20210112.gappssmtp.com:dkim,oabmail.de:email];
+	 FROM_HAS_DN(0.00)[];
+	 RWL_MAILSPIKE_GOOD(0.00)[209.85.218.51:from];
+	 ZERO_FONT(0.10)[1];
+	 HTML_SHORT_LINK_IMG_1(2.00)[];
+	 MIME_GOOD(-0.10)[multipart/alternative,text/plain];
+	 PREVIOUSLY_DELIVERED(0.00)[user-628ef3f0-7620-4953-8573-cf18e5c55445@oabmail.de];
+	 DMARC_NA(0.00)[oabat.de];
+	 RCPT_COUNT_ONE(0.00)[1];
+	 MANY_INVISIBLE_PARTS(0.05)[1];
+	 TO_DN_ALL(0.00)[];
+	 DKIM_TRACE(0.00)[oabat-de.20210112.gappssmtp.com:+];
+	 BAYES_HAM(-2.98)[99.90%];
+	 NEURAL_HAM(-0.00)[-1.000];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+,1:+,2:~];
+	 R_SPF_ALLOW(-0.20)[+ip4:209.85.128.0/17];
+	 ASN(0.00)[asn:15169, ipnet:209.85.128.0/17, country:US];
+	 RCVD_COUNT_TWO(0.00)[2];
+	 RCVD_TLS_ALL(0.00)[]
+X-Rspamd-Queue-Id: EA82F1009D8
+X-NC-CID: mZvxAq899rWj91w8N4HrmvvcX2ZTWzx4VHzcZ6+2EhJWOqTw
+
+--000000000000bf617a05e529a634
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+hallo Rainer
+
+On Mon, Aug 1, 2022 at 10:17 AM Rainer Zufall =C3=BCber Oabat <
+user-628ef3f0-7620-4953-8573-cf18e5c55445@oabmail.de> wrote:
+
+> Sie haben eine neue Nachricht!=F0=9F=92=AC=F0=9F=8E=89
+> Rainer Zufall
+> schreibt
+> Hallo?!?
+> Zur Nachricht <https://www.oabat.de/chat?conversation_id=3D33231>
+> i
+> * Sie k=C3=B6nnen auch direkt mit der 'Antworten'-Funktion Ihres
+> E-Mail-Programms antworten. *
+> <https://www.facebook.com/sharer/sharer.php?u=3Dhttps://www.oabat.de>
+> <https://www.instagram.com/oabat>
+> <https://twitter.com/home?status=3Dhttps://www.oabat.de>
+>
+> copyright 2022 Oabat GmbH
+> Innstra=C3=9Fe 69b, 94032 Passau, Deutschland
+> Handelsregister: HRB 10474
+> Vertretungsberechtigte Personen: Nikolas Adjan, Veit Heller
+>
+
+
+--=20
+
+
+
+*Veit Heller*
+
+Gr=C3=BCnder & Gesch=C3=A4ftsf=C3=BChrung
+
+Tel.:  0171 511 4981
+
+Mail: veit.heller@oabat.de
+
+
+
+
+
+
+*Copyright =C2=A9 2022 Oabat, All rights reserved.*
+
+Oabat GmbH
+
+Bahnhofstra=C3=9Fe 15, 94538 F=C3=BCrstenstein
+
+Gesch=C3=A4ftsf=C3=BChrer Nikolas Adjan, Veit Heller
+
+Amtsgericht Passau - HRB 10474
+
+--000000000000bf617a05e529a634
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">hallo Rainer</div><br><div class=3D"gmail_quote"><div dir=
+=3D"ltr" class=3D"gmail_attr">On Mon, Aug 1, 2022 at 10:17 AM Rainer Zufall=
+ =C3=BCber Oabat &lt;<a href=3D"mailto:user-628ef3f0-7620-4953-8573-cf18e5c=
+55445@oabmail.de">user-628ef3f0-7620-4953-8573-cf18e5c55445@oabmail.de</a>&=
+gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><u></=
+u>
+
+
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+
+<div style=3D"background-color:rgb(246,246,249)">
+  <div style=3D"background-color:rgb(246,246,249)">
+   =20
+    <div style=3D"margin:0px auto;max-width:600px">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"width:100%">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px 0px 40px;=
+text-align:center">
+             =20
+              <div class=3D"gmail-m_-6647471275197299319mj-column-per-100" =
+style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;v=
+ertical-align:top;width:100%">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"vertical-align:top" width=3D"100%">
+                  <tbody><tr>
+                    <td align=3D"center" style=3D"font-size:0px;padding:10p=
+x 25px;word-break:break-word">
+                      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"border-collapse:collapse;border-spacing:0=
+px">
+                        <tbody>
+                          <tr>
+                            <td style=3D"width:150px">
+                              <img height=3D"auto" style=3D"border: 0px; di=
+splay: block; outline: none; text-decoration: none; height: auto; width: 10=
+0%; font-size: 13px;" width=3D"150">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody></table>
+              </div>
+             =20
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   =20
+    <div style=3D"background:rgb(255,255,255);margin:0px auto;border-radius=
+:10px;max-width:600px">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"background:rgb(255,255,255);width:100%;b=
+order-radius:10px">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px 0px;text-=
+align:center">
+             =20
+              <div style=3D"margin:0px auto;max-width:600px">
+                <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"width:100%">
+                  <tbody>
+                    <tr>
+                      <td style=3D"direction:ltr;font-size:0px;padding:16px=
+ 0px 0px;text-align:center">
+                       =20
+                        <div class=3D"gmail-m_-6647471275197299319mj-column=
+-per-100" style=3D"font-size:0px;text-align:left;direction:ltr;display:inli=
+ne-block;vertical-align:top;width:100%">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top" width=3D"100%">
+                            <tbody><tr>
+                              <td align=3D"center" style=3D"font-size:0px;p=
+adding:10px 25px;word-break:break-word">
+                                <div style=3D"font-family:Ubuntu,Helvetica,=
+Arial,sans-serif;font-size:20px;font-weight:bold;line-height:1.5;text-align=
+:center;color:rgb(85,85,85)">Sie haben eine neue Nachricht!=F0=9F=92=AC=F0=
+=9F=8E=89</div>
+                              </td>
+                            </tr>
+                          </tbody></table>
+                        </div>
+                       =20
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+             =20
+              <div style=3D"margin:0px auto;max-width:600px">
+                <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"width:100%">
+                  <tbody>
+                    <tr>
+                      <td style=3D"direction:ltr;font-size:0px;padding:20px=
+ 0px;text-align:center">
+                       =20
+                        <div class=3D"gmail-m_-6647471275197299319mj-column=
+-per-100" style=3D"font-size:0px;text-align:left;direction:ltr;display:inli=
+ne-block;vertical-align:top;width:100%">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top" width=3D"100%">
+                            <tbody><tr>
+                              <td align=3D"center" style=3D"font-size:0px;p=
+adding:10px 25px 0px;word-break:break-word">
+                                <div style=3D"font-family:Ubuntu,Helvetica,=
+Arial,sans-serif;font-size:24px;line-height:1;text-align:center;color:rgb(0=
+,0,0)">Rainer Zufall</div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align=3D"center" style=3D"font-size:0px;p=
+adding:0px 25px 20px;word-break:break-word">
+                                <div style=3D"font-family:Ubuntu,Helvetica,=
+Arial,sans-serif;font-size:15px;line-height:1;text-align:center;color:rgb(0=
+,0,0)">schreibt</div>
+                              </td>
+                            </tr>
+                          </tbody></table>
+                        </div>
+                       =20
+                        <div class=3D"gmail-m_-6647471275197299319mj-column=
+-per-88" style=3D"font-size:0px;text-align:left;direction:ltr;display:inlin=
+e-block;vertical-align:top;width:100%">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" width=3D"100%">
+                            <tbody>
+                              <tr>
+                                <td style=3D"background-color:rgb(245,245,2=
+45);border-radius:15px;vertical-align:top;padding-bottom:10px">
+                                  <table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" width=3D"100%">
+                                    <tbody><tr>
+                                      <td align=3D"center" style=3D"font-si=
+ze:0px;padding:10px 25px;word-break:break-word">
+                                        <div style=3D"font-family:Ubuntu,He=
+lvetica,Arial,sans-serif;font-size:17px;line-height:1;text-align:center;col=
+or:rgb(0,0,0)">Hallo?!?</div>
+                                      </td>
+                                    </tr>
+                                  </tbody></table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                       =20
+                        <div class=3D"gmail-m_-6647471275197299319mj-column=
+-per-100" style=3D"font-size:0px;text-align:left;direction:ltr;display:inli=
+ne-block;vertical-align:top;width:100%">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" width=3D"100%">
+                            <tbody>
+                              <tr>
+                                <td style=3D"vertical-align:top;padding-top=
+:10px;padding-bottom:20px">
+                                  <table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" width=3D"100%">
+                                    <tbody><tr>
+                                      <td align=3D"center" class=3D"gmail-m=
+_-6647471275197299319btn-primary" style=3D"font-size:0px;padding:10px 25px;=
+word-break:break-word">
+                                        <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" role=3D"presentation" style=3D"border-collapse:separat=
+e;width:50%;line-height:100%">
+                                          <tbody><tr>
+                                            <td align=3D"center" bgcolor=3D=
+"#2baee8" role=3D"presentation" style=3D"border:none;border-radius:32px;bac=
+kground:rgb(43,174,232)" valign=3D"middle">
+                                              <a href=3D"https://www.oabat.=
+de/chat?conversation_id=3D33231" style=3D"display:inline-block;background:r=
+gb(43,174,232);color:white;font-family:Ubuntu,Helvetica,Arial,sans-serif;fo=
+nt-size:16px;font-weight:normal;line-height:120%;margin:0px;text-decoration=
+:none;text-transform:none;padding:10px;border-radius:32px" target=3D"_blank=
+"> Zur Nachricht </a>
+                                            </td>
+                                          </tr>
+                                        </tbody></table>
+                                      </td>
+                                    </tr>
+                                  </tbody></table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                       =20
+                        <div class=3D"gmail-m_-6647471275197299319mj-column=
+-per-100" style=3D"font-size:0px;text-align:left;direction:ltr;display:inli=
+ne-block;vertical-align:top;width:100%">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" width=3D"100%">
+                            <tbody>
+                              <tr>
+                                <td style=3D"vertical-align:top;padding-bot=
+tom:20px">
+                                  <table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" width=3D"100%">
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                       =20
+                        <div class=3D"gmail-m_-6647471275197299319mj-column=
+-per-88" style=3D"font-size:0px;text-align:left;direction:ltr;display:inlin=
+e-block;vertical-align:top;width:100%">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"background-color:rgb(0,0,0);border-ra=
+dius:15px;vertical-align:top" width=3D"100%">
+                            <tbody><tr>
+                              <td style=3D"font-size:0px;word-break:break-w=
+ord">
+                                <div class=3D"gmail-m_-6647471275197299319m=
+j-column-per-100" style=3D"font-size:0px;text-align:left;direction:ltr;disp=
+lay:inline-block;vertical-align:top;width:100%">
+                                  <table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"vertical-align:top" width=3D"=
+100%">
+                                    <tbody><tr>
+                                      <td align=3D"center" class=3D"gmail-m=
+_-6647471275197299319center-content" style=3D"font-size:0px;padding:10px 25=
+px;word-break:break-word">
+                                        <div style=3D"font-family:Ubuntu,He=
+lvetica,Arial,sans-serif;font-size:14px;line-height:1;text-align:center;col=
+or:rgb(255,255,255)">
+                                          <div style=3D"border-radius:50px;=
+border:2px solid rgb(255,255,255);width:20px;min-width:20px;height:20px;fon=
+t-weight:bolder;display:inline-block">i</div>
+                                          <strong> Sie k=C3=B6nnen auch dir=
+ekt mit der &#39;Antworten&#39;-Funktion Ihres E-Mail-Programms antworten. =
+</strong>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody></table>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody></table>
+                        </div>
+                       =20
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+             =20
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   =20
+    <div style=3D"margin:0px auto;max-width:600px">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"width:100%">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px 0px;text-=
+align:center">
+             =20
+              <div class=3D"gmail-m_-6647471275197299319mj-column-per-100" =
+style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;v=
+ertical-align:top;width:100%">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"vertical-align:top" width=3D"100%">
+                  <tbody><tr>
+                    <td align=3D"left" style=3D"font-size:0px;padding:10px =
+25px;word-break:break-word">
+                      <div style=3D"font-family:Ubuntu,Helvetica,Arial,sans=
+-serif;font-size:15px;line-height:2;text-align:left;color:rgb(85,85,85)"></=
+div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align=3D"center" class=3D"gmail-m_-6647471275197299=
+319social-icons" style=3D"font-size:0px;padding:10px 25px;word-break:break-=
+word">
+                     =20
+                      <table align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;display:inlin=
+e-table">
+                        <tbody><tr>
+                          <td style=3D"padding:18px">
+                            <table border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" role=3D"presentation" style=3D"background:rgb(147,157,168);border-=
+radius:3px;width:30px">
+                              <tbody><tr>
+                                <td style=3D"font-size:0px;height:30px;vert=
+ical-align:middle;width:30px">
+                                  <a href=3D"https://www.facebook.com/share=
+r/sharer.php?u=3Dhttps://www.oabat.de" target=3D"_blank">
+                                    <img height=3D"30" src=3D"https://www.m=
+ailjet.com/images/theme/v1/icons/ico-social/facebook.png" style=3D"border-r=
+adius: 3px; display: block;" width=3D"30">
+                                  </a>
+                                </td>
+                              </tr>
+                            </tbody></table>
+                          </td>
+                        </tr>
+                      </tbody></table>
+                     =20
+                      <table align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;display:inlin=
+e-table">
+                        <tbody><tr>
+                          <td style=3D"padding:18px">
+                            <table border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" role=3D"presentation" style=3D"background:rgb(147,157,168);border-=
+radius:3px;width:30px">
+                              <tbody><tr>
+                                <td style=3D"font-size:0px;height:30px;vert=
+ical-align:middle;width:30px">
+                                  <a href=3D"https://www.instagram.com/oaba=
+t" target=3D"_blank">
+                                    <img height=3D"30" src=3D"https://www.m=
+ailjet.com/images/theme/v1/icons/ico-social/instagram.png" style=3D"border-=
+radius: 3px; display: block;" width=3D"30">
+                                  </a>
+                                </td>
+                              </tr>
+                            </tbody></table>
+                          </td>
+                        </tr>
+                      </tbody></table>
+                     =20
+                      <table align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;display:inlin=
+e-table">
+                        <tbody><tr>
+                          <td style=3D"padding:18px">
+                            <table border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" role=3D"presentation" style=3D"background:rgb(147,157,168);border-=
+radius:3px;width:30px">
+                              <tbody><tr>
+                                <td style=3D"font-size:0px;height:30px;vert=
+ical-align:middle;width:30px">
+                                  <a href=3D"https://twitter.com/home?statu=
+s=3Dhttps://www.oabat.de" target=3D"_blank">
+                                    <img height=3D"30" src=3D"https://www.m=
+ailjet.com/images/theme/v1/icons/ico-social/twitter.png" style=3D"border-ra=
+dius: 3px; display: block;" width=3D"30">
+                                  </a>
+                                </td>
+                              </tr>
+                            </tbody></table>
+                          </td>
+                        </tr>
+                      </tbody></table>
+                     =20
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align=3D"center" style=3D"font-size:0px;padding:10p=
+x 25px;word-break:break-word">
+                      <div style=3D"font-family:Ubuntu,Helvetica,Arial,sans=
+-serif;font-size:12px;line-height:1.4;text-align:center;color:rgb(147,157,1=
+68)">copyright 2022 Oabat GmbH <br> Innstra=C3=9Fe 69b, 94032 Passau, Deuts=
+chland <br> Handelsregister: HRB 10474 <br> Vertretungsberechtigte Personen=
+: Nikolas Adjan, Veit Heller <br></div>
+                    </td>
+                  </tr>
+                </tbody></table>
+              </div>
+             =20
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   =20
+  </div>
+</div>
+
+
+</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
+ class=3D"gmail_signature"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"lt=
+r"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div=
+ dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div d=
+ir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=
+=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><p style=3D"color:rgb(51,51,51);=
+font-family:&quot;Open Sans&quot;,Helvetica,Arial,sans-serif;line-height:21=
+px;margin:0px;font-size:14px"><br></p><p style=3D"color:rgb(51,51,51);font-=
+family:&quot;Open Sans&quot;,Helvetica,Arial,sans-serif;line-height:21px;ma=
+rgin:0px;font-size:14px"><strong style=3D"line-height:inherit"></strong></p=
+><div><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><=
+/div></div></div></div></div><p style=3D"color:rgb(51,51,51);font-family:&q=
+uot;Open Sans&quot;,Helvetica,Arial,sans-serif;line-height:21px;margin:0px;=
+font-size:14px"><strong style=3D"line-height:inherit"><br></strong></p><p s=
+tyle=3D"color:rgb(51,51,51);font-family:&quot;Open Sans&quot;,Helvetica,Ari=
+al,sans-serif;line-height:21px;margin:0px;font-size:14px"><strong style=3D"=
+line-height:inherit"></strong></p><table cellpadding=3D"0" cellspacing=3D"0=
+" style=3D"border-spacing:0px;border-collapse:collapse;background-color:tra=
+nsparent;color:rgb(68,68,68);width:480px;font-size:9pt;font-family:Arial,sa=
+ns-serif;line-height:14px"><tbody><tr><td valign=3D"middle" style=3D"paddin=
+g:0px;width:120px;vertical-align:middle"><strong style=3D"color:rgb(51,51,5=
+1);font-family:&quot;Open Sans&quot;,Helvetica,Arial,sans-serif;font-size:1=
+4px;line-height:inherit"><blockquote style=3D"margin:0px 0px 0px 40px;borde=
+r:none;padding:0px"><strong style=3D"color:rgb(51,51,51);font-family:&quot;=
+Open Sans&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:inher=
+it"><img width=3D"94" height=3D"96" src=3D"https://ci3.googleusercontent.co=
+m/mail-sig/AIorK4w5qbZha61R7JcuojzFIYoN-ZPc6aFE73DnWh6W0xBXSH7ZtcfZNu8sUOng=
+Cn1RqZwCKwKzFVg"></strong></blockquote></strong></td><td valign=3D"middle" =
+style=3D"padding:0px;width:360px;font-family:Arial,sans-serif;vertical-alig=
+n:middle"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:=
+0px"><strong style=3D"font-family:&quot;Open Sans&quot;,Helvetica,Arial,san=
+s-serif;font-size:14px;line-height:inherit"><font color=3D"#000000">Veit He=
+ller</font></strong><div style=3D"font-family:Arial,Helvetica,sans-serif;fo=
+nt-size:small"><p style=3D"font-family:&quot;Open Sans&quot;,Helvetica,Aria=
+l,sans-serif;line-height:21px;margin:0px;font-size:14px"><span style=3D"fon=
+t-size:13px"><font color=3D"#000000">Gr=C3=BCnder &amp; Gesch=C3=A4ftsf=C3=
+=BChrung</font></span></p></div><div style=3D"font-family:Arial,Helvetica,s=
+ans-serif;font-size:small"><p style=3D"font-family:&quot;Open Sans&quot;,He=
+lvetica,Arial,sans-serif;line-height:21px;margin:0px"><font color=3D"#00000=
+0">Tel.:=C2=A0 0171 511 4981=C2=A0 =C2=A0</font></p></div><div style=3D"fon=
+t-family:Arial,Helvetica,sans-serif;font-size:small"><p style=3D"font-famil=
+y:&quot;Open Sans&quot;,Helvetica,Arial,sans-serif;line-height:21px;margin:=
+0px"><font color=3D"#000000">Mail:</font><font color=3D"#666666" style=3D"c=
+olor:rgb(34,34,34)"> <a href=3D"mailto:veit.heller@oabat.de" target=3D"_bla=
+nk">veit.heller@oabat.de</a></font></p></div></blockquote></td></tr></tbody=
+></table><p style=3D"color:rgb(51,51,51);font-family:&quot;Open Sans&quot;,=
+Helvetica,Arial,sans-serif;line-height:21px;margin:0px;font-size:14px"></p>=
+</div></div></div></div></div></div></div></div></div></div></div></div><bl=
+ockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><em styl=
+e=3D"text-align:center;line-height:inherit"><blockquote style=3D"margin:0px=
+ 0px 0px 40px;border:none;padding:0px"><div style=3D"text-align:left"><em s=
+tyle=3D"line-height:inherit"><blockquote style=3D"margin:0px 0px 0px 40px;b=
+order:none;padding:0px;display:inline"><em style=3D"line-height:inherit"><b=
+r><br><br><img width=3D"200" height=3D"50" src=3D"https://ci3.googleusercon=
+tent.com/mail-sig/AIorK4ycR6NSCPNVxS0i8jC7zGEcDnZXV14WWWDu_FLEqZnnNzXjHYdB5=
+-wTg-SqemY9MLFLQpHa-GM"><br></em></blockquote></em></div></blockquote></em>=
+</blockquote><blockquote style=3D"margin:0px 0px 0px 40px;border:none;paddi=
+ng:0px"><em style=3D"text-align:center;line-height:inherit"><blockquote sty=
+le=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><div><div><div><div>=
+<div><div><div><div><div><div><div><div style=3D"text-align:center"><div st=
+yle=3D"text-align:left"><em style=3D"line-height:inherit"><font size=3D"1">=
+Copyright =C2=A9 2022 Oabat, All rights reserved.</font></em></div><div sty=
+le=3D"text-align:left"><em style=3D"line-height:inherit"><font size=3D"1"><=
+br></font></em></div></div></div></div></div></div></div></div></div></div>=
+</div></div></div></blockquote></em></blockquote><blockquote style=3D"margi=
+n:0px 0px 0px 40px;border:none;padding:0px"></blockquote><blockquote style=
+=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><blockquote style=3D"m=
+argin:0px 0px 0px 40px;border:none;padding:0px"><span style=3D"font-size:x-=
+small;text-align:center"><font color=3D"#000000">Oabat GmbH</font></span></=
+blockquote><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding=
+:0px"><span style=3D"font-size:x-small;text-align:center"><font color=3D"#0=
+00000">Bahnhofstra=C3=9Fe 15, 94538 F=C3=BCrstenstein=C2=A0</font></span></=
+blockquote><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding=
+:0px"><div><span style=3D"font-size:x-small;text-align:center"><font color=
+=3D"#000000">Gesch=C3=A4ftsf=C3=BChrer Nikolas Adjan, Veit Heller</font></s=
+pan></div></blockquote></blockquote><blockquote style=3D"margin:0px 0px 0px=
+ 40px;border:none;padding:0px"><blockquote style=3D"margin:0px 0px 0px 40px=
+;border:none;padding:0px"><div><span style=3D"font-size:x-small;text-align:=
+center"><font color=3D"#000000">Amtsgericht Passau - HRB 10474</font></span=
+></div></blockquote></blockquote><blockquote style=3D"margin:0px 0px 0px 40=
+px;border:none;padding:0px"></blockquote><div><blockquote style=3D"margin:0=
+px 0px 0px 40px;border:none;padding:0px"><blockquote style=3D"margin:0px 0p=
+x 0px 40px;border:none;padding:0px"><div><div style=3D"text-align:left"><br=
+></div></div></blockquote></blockquote><div><div dir=3D"ltr"><div dir=3D"lt=
+r"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div=
+ dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><p style=3D=
+"font-family:&quot;Open Sans&quot;,Helvetica,Arial,sans-serif;line-height:2=
+1px;margin:0px"><font size=3D"1" color=3D"#999999"><span style=3D"font-fami=
+ly:Arial,Helvetica,sans-serif;line-height:inherit"></span><span style=3D"fo=
+nt-family:Arial,Helvetica,sans-serif;line-height:inherit"></span><span styl=
+e=3D"font-family:Arial,Helvetica,sans-serif;line-height:inherit"></span></f=
+ont></p>
+<div style=3D"color:rgb(0,0,0);font-family:Helvetica;font-size:12px"><em st=
+yle=3D"color:rgb(85,85,85);font-family:Arial,&quot;Helvetica Neue&quot;,Hel=
+vetica,sans-serif;font-size:14px;text-align:center;line-height:inherit"><sp=
+an style=3D"font-family:Arial,Helvetica,sans-serif;font-size:small;font-sty=
+le:normal;color:rgb(34,34,34)"></span></em></div><p style=3D"color:rgb(51,5=
+1,51);font-family:&quot;Open Sans&quot;,Helvetica,Arial,sans-serif;line-hei=
+ght:21px;margin:0px;font-size:14px"><span style=3D"line-height:19px;color:r=
+gb(128,128,128);font-size:13px"><em style=3D"color:rgb(85,85,85);font-famil=
+y:Arial,&quot;Helvetica Neue&quot;,Helvetica,sans-serif;font-size:14px;text=
+-align:center;line-height:inherit"></em></span></p><div><em><div style=3D"l=
+ine-height:inherit;font-style:normal"><br><br></div></em></div></div></div>=
+</div></div></div></div></div></div></div></div></div></div></div></div></d=
+iv></div></div></div></div></div></div>
+
+--000000000000bf617a05e529a634--

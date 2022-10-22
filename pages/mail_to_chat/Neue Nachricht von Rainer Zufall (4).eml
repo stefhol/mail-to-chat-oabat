@@ -1,0 +1,503 @@
+Delivered-To: frederik.stoiber@oabat.de
+Received: by 2002:a8a:5f5:0:0:0:0:0 with SMTP id c21csp1354357ocm;
+        Fri, 21 Oct 2022 09:03:58 -0700 (PDT)
+X-Received: by 2002:a05:600c:5c4:b0:3c5:9a14:e5f6 with SMTP id p4-20020a05600c05c400b003c59a14e5f6mr14201130wmd.153.1666368237968;
+        Fri, 21 Oct 2022 09:03:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1666368237; cv=none;
+        d=google.com; s=arc-20160816;
+        b=Pd+9offDQbrhxG62Wrwl8O/Qa/to76uhhsqQR4WEow5aPQ609NbDOJBaXRIheCruvZ
+         0lDnOojYWLXPwcTRFnGjgO17Py5UMsViEOYFB6rcIJWiKSm7iFm4aZjx6J2yJi8jZgHD
+         o6xAp7/cNmnQ0K/H2qAF+8uLSKzlRvpxdxgKm5mb6Aivq0HcvuWOrhdlcqCPD+bWuWDn
+         XTxfCzUYBCoSKlTVbDmDKyLae8Wa9V2FZIYEocCnhBDW8ODS0xyOVatWdx1nXRHkxcas
+         q6JCyhCCMxMKfWJyXK9wuMMrdsUN9tINANqDug+cB4TlgIbhQLGLPqstzSktin3i78ks
+         xOgQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=to:in-reply-to:references:message-id:date:subject:mime-version:from
+         :content-transfer-encoding:dkim-signature;
+        bh=vE7q4w6ab/9mVH1l4OUEL32TEgA1Wl4Sh7HKNvNE2i4=;
+        b=ZQRBc7aZfW282D65hG+WMET74HSrmXyoVH+SCvtxXYQQuiNlFjilIyhhltSWQQ78PV
+         AE1zcr/JdfZD/qniQBeAEWNlm5U5+OeRbPVArZlhbttuYDz4uNeSByxsLULwOE+tZKW+
+         p5SJz+Sqytm7RrrcS2UAQLZaNYsIxo5sTMP44c7f6gl2+o9nF3Mr5/cbqeIiqi+jnkeO
+         eNXOC49aF2H/D9HDi1wVxLmopNSH2IECpkaKnZ5qyA3XVXJiz82BbyH27eT4Tvb03Frr
+         KEzHlgTRWe1z576N6/M1k+Leyl5CHQByKI0Fc1DAr4J+/4PP8Y5KX5goZ/MWg0ezp5oI
+         E/yQ==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20210112 header.b=i+D6c43l;
+       spf=pass (google.com: domain of frederikstoiber@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=frederikstoiber@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com
+Return-Path: <frederikstoiber@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id w20-20020adfbad4000000b00234bb2218adsor3844263wrg.51.2022.10.21.09.03.57
+        for <frederik.stoiber@oabat.de>
+        (Google Transport Security);
+        Fri, 21 Oct 2022 09:03:57 -0700 (PDT)
+Received-SPF: pass (google.com: domain of frederikstoiber@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20210112 header.b=i+D6c43l;
+       spf=pass (google.com: domain of frederikstoiber@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=frederikstoiber@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:in-reply-to:references:message-id:date:subject:mime-version:from
+         :content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vE7q4w6ab/9mVH1l4OUEL32TEgA1Wl4Sh7HKNvNE2i4=;
+        b=i+D6c43lU29UaInZGMkYv0az7EYAPrEM73KWQgpFWZn1br/7AEOI8Mrs0a3VxgjRwK
+         k3u4ZuLzMtka/eyQmlKtl7Rlr2OiSqpX1O33yGYiEZYAzo8eD+U9XV4Sh1W5eMOVcybj
+         gA8OSg4l8gs8sDd7p05kPxqWlqkMU82WG5sDThbqMH7bzaBuC/MtalenOfAleDCvmnhD
+         X4dgLYTJpqnuGFRo59KarVCN80m++TtIl0TpJzxgJS/EdMWi4OOUGOLzhBdw8rk5M4Zt
+         edrQjvrLoukJN+9XQ1rs6yjHgriGWV419cVap8NckHTHvfC0CdkPY/9SS7Zad2bSr1UI
+         p+Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:in-reply-to:references:message-id:date:subject:mime-version:from
+         :content-transfer-encoding:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=vE7q4w6ab/9mVH1l4OUEL32TEgA1Wl4Sh7HKNvNE2i4=;
+        b=5a7t+D1U9euA/UvNZIqcnWpPMuY3pZFlyVYhj2XmnsixLYpMwEdbRmf8x7pbOOhLrt
+         x7paC52gbTZwHEWR8jNBhecyM7fxPzSm6YZf3xTvOkTfwF+EWBECIJSyHa4ze8Bztt9e
+         QVlu5ATJVJIOcNytc4e6lZBaPBZ47imeiuMrd5gpYmGPLHJyt0FD6+TsxATiCn1Yls2b
+         1+KrkAruWjdOlzdOrCoULBFDspHxOLusoyRCeVQ3ED5wb7ZnP/HhGz/h8JTFQpHNNfs8
+         G5TX3RNGOLqi+4T2jJkTvh1aGLAwXHoAuRFKnMH6VmsYLGRD14OqqVVul5UAoDUTHC0z
+         jmyA==
+X-Gm-Message-State: ACrzQf0vGO/W3mMI8lOBM10tqXOzr97JXXd2dRz+66htydekazhXN1Fh
+	LwFzNRPXMS6P1XXoQtrITjmOXhWtXD0=
+X-Google-Smtp-Source: AMsMyM7s3tAF6ccEXa3oMrQoZ4xnKc59koMP8rf3KNQVBxMw/RVkmMsoSGw8zehU19iniR8KosmajQ==
+X-Received: by 2002:a05:6000:71d:b0:22e:71d1:8c50 with SMTP id bs29-20020a056000071d00b0022e71d18c50mr12630876wrb.239.1666368237179;
+        Fri, 21 Oct 2022 09:03:57 -0700 (PDT)
+Return-Path: <frederikstoiber@gmail.com>
+Received: from smtpclient.apple ([88.133.216.125])
+        by smtp.gmail.com with ESMTPSA id j5-20020a05600c488500b003c6c4639ac6sm2689665wmp.34.2022.10.21.09.03.56
+        for <frederik.stoiber@oabat.de>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Oct 2022 09:03:56 -0700 (PDT)
+Content-Type: multipart/alternative; boundary=Apple-Mail-8F2AC4E0-13AB-44B7-BF40-2EBA8B821690
+Content-Transfer-Encoding: 7bit
+From: Frederik Stoiber <frederikstoiber@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: Neue Nachricht von Rainer Zufall
+Date: Fri, 21 Oct 2022 18:03:45 +0200
+Message-Id: <1F90D382-1598-4FBC-9C2D-FF3C3BFF7166@gmail.com>
+References: <CAAMk420hCzumr-AW76eQ10P-cEDkkkLZUNAEjgh2uFmNZdDEpQ@mail.gmail.com>
+In-Reply-To: <CAAMk420hCzumr-AW76eQ10P-cEDkkkLZUNAEjgh2uFmNZdDEpQ@mail.gmail.com>
+To: Frederik Stoiber <frederik.stoiber@oabat.de>
+X-Mailer: iPhone Mail (20A380)
+
+
+--Apple-Mail-8F2AC4E0-13AB-44B7-BF40-2EBA8B821690
+Content-Type: text/html;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
+utf-8"></head><body dir=3D"auto">Test vom iPhone<br><br><div dir=3D"ltr">Von=
+ meinem iPhone gesendet</div><div dir=3D"ltr"><br><blockquote type=3D"cite">=
+Am 21.10.2022 um 18:03 schrieb oabat mails &lt;oabat.mails@oabat.de&gt;:<br>=
+<br></blockquote></div><blockquote type=3D"cite"><div dir=3D"ltr">=EF=BB=BF<=
+div dir=3D"ltr"><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
+"gmail_attr">---------- Forwarded message ---------<br>From: <strong class=3D=
+"gmail_sendername" dir=3D"auto">Rainer Zufall =C3=BCber Oabat</strong> <span=
+ dir=3D"auto">&lt;<a href=3D"mailto:noreply@oabat.de">noreply@oabat.de</a>&g=
+t;</span><br>Date: Thu, Oct 20, 2022 at 12:35 PM<br>Subject: Neue Nachricht v=
+on Rainer Zufall<br>To:  &lt;<a href=3D"mailto:admin@oabat.de">admin@oabat.d=
+e</a>&gt;<br></div><br><br><div class=3D"msg2806271857341301428"><u></u>
+
+
+
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+
+
+<div style=3D"background-color:#f6f6f9">
+  <div style=3D"background-color:#f6f6f9">
+   =20
+    <div style=3D"background:#f6f6f9;background-color:#f6f6f9;margin:0px aut=
+o;max-width:600px">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"background:#f6f6f9;background-color:#f6f6f=
+9;width:100%">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px;text-align=
+:center">
+             =20
+              <div class=3D"m_2806271857341301428mj-column-per-100" style=3D=
+"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-a=
+lign:top;width:100%">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"vertical-align:top" width=3D"100%">
+                  <tbody><tr>
+                    <td align=3D"center" style=3D"font-size:0px;padding:10px=
+ 25px;word-break:break-word">
+                      <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" role=3D"presentation" style=3D"border-collapse:collapse;border-spacing:0px=
+">
+                        <tbody>
+                          <tr>
+                            <td style=3D"width:150px">
+                              <a href=3D"https://www.oabat.de" target=3D"_bl=
+ank">
+                                <img alt=3D"Oabat" height=3D"auto" src=3D"ht=
+tps://www.oabat.de/email/logo_1.png" style=3D"border:0;display:block;outline=
+:none;text-decoration:none;height:auto;width:100%;font-size:13px" width=3D"1=
+50" data-unique-identifier=3D"">
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody></table>
+              </div>
+             =20
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   =20
+    <div style=3D"background:#ffffff;background-color:#ffffff;margin:0px aut=
+o;max-width:600px">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"background:#ffffff;background-color:#fffff=
+f;width:100%">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px 0;text-ali=
+gn:center">
+             =20
+              <div class=3D"m_2806271857341301428mj-column-per-100" style=3D=
+"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-a=
+lign:top;width:100%">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"vertical-align:top" width=3D"100%">
+                  <tbody><tr>
+                    <td align=3D"center" style=3D"font-size:0px;padding:10px=
+ 25px;padding-right:25px;padding-left:25px;word-break:break-word">
+                      <div style=3D"font-family:Ubuntu,Helvetica,Arial,sans-=
+serif;font-size:20px;line-height:1.5;text-align:center;color:#000000">Sie ha=
+ben eine neue Nachricht!=F0=9F=92=AC=F0=9F=8E=89</div>
+                    </td>
+                  </tr>
+                </tbody></table>
+              </div>
+             =20
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   =20
+    <div style=3D"background:#ffffff;background-color:#ffffff;margin:0px aut=
+o;max-width:600px">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"background:#ffffff;background-color:#fffff=
+f;width:100%">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:0px;text-align:=
+center">
+             =20
+              <div class=3D"m_2806271857341301428mj-column-per-100" style=3D=
+"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-a=
+lign:top;width:100%">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"vertical-align:top" width=3D"100%">
+                  <tbody><tr>
+                    <td align=3D"center" style=3D"font-size:0px;padding:10px=
+ 25px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:bre=
+ak-word">
+                      <div style=3D"font-family:Ubuntu,Helvetica,Arial,sans-=
+serif;font-size:20px;line-height:1;text-align:center;color:#000000">Rainer Z=
+ufall</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align=3D"center" style=3D"font-size:0px;padding:10px=
+ 25px;padding-top:0px;padding-right:25px;padding-left:25px;word-break:break-=
+word">
+                      <div style=3D"font-family:Ubuntu,Helvetica,Arial,sans-=
+serif;font-size:15px;line-height:1;text-align:center;color:#000000">schreibt=
+</div>
+                    </td>
+                  </tr>
+                </tbody></table>
+              </div>
+             =20
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   =20
+    <div style=3D"background:#ffffff;background-color:#ffffff;margin:0px aut=
+o;max-width:600px">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"background:#ffffff;background-color:#fffff=
+f;width:100%">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:0px;text-align:=
+center">
+             =20
+              <div class=3D"m_2806271857341301428mj-column-per-88" style=3D"=
+font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-al=
+ign:top;width:100%">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%">
+                  <tbody>
+                    <tr>
+                      <td style=3D"background-color:#f5f5f5;border-radius:15=
+px;vertical-align:top;padding-bottom:10px">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" width=3D"100%">
+                          <tbody><tr>
+                            <td align=3D"center" style=3D"font-size:0px;padd=
+ing:10px 25px;padding-right:25px;padding-left:25px;word-break:break-word">
+                              <div style=3D"font-family:Ubuntu,Helvetica,Ari=
+al,sans-serif;font-size:17px;line-height:1;text-align:center;color:#000000">=
+I'm gonna make him an offer he can't refuse</div>
+                            </td>
+                          </tr>
+                        </tbody></table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+             =20
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   =20
+    <div style=3D"background:#ffffff;background-color:#ffffff;margin:0px aut=
+o;max-width:600px">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"background:#ffffff;background-color:#fffff=
+f;width:100%">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px 0;text-ali=
+gn:center">
+             =20
+              <div class=3D"m_2806271857341301428mj-column-per-100" style=3D=
+"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-a=
+lign:top;width:100%">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" width=3D"100%">
+                  <tbody>
+                    <tr>
+                      <td style=3D"vertical-align:top;padding:0px">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" width=3D"100%">
+                          <tbody><tr>
+                            <td align=3D"center" class=3D"m_2806271857341301=
+428btn-primary" style=3D"font-size:0px;padding:10px 25px;padding-top:10px;pa=
+dding-bottom:10px;word-break:break-word">
+                              <table border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" role=3D"presentation" style=3D"border-collapse:separate;width:50%;=
+line-height:100%">
+                                <tbody><tr>
+                                  <td align=3D"center" bgcolor=3D"#2baee8" r=
+ole=3D"presentation" style=3D"border:none;border-radius:32px;background:#2ba=
+ee8" valign=3D"middle">
+                                    <a href=3D"https://www.oabat.de/chat?con=
+versation_id=3D27" style=3D"display:inline-block;background:#2baee8;color:wh=
+ite;font-family:Ubuntu,Helvetica,Arial,sans-serif;font-size:17px;font-weight=
+:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;p=
+adding:13px;border-radius:32px" target=3D"_blank"> Zur Nachricht </a>
+                                  </td>
+                                </tr>
+                              </tbody></table>
+                            </td>
+                          </tr>
+                        </tbody></table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+             =20
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   =20
+    <div style=3D"background:#ffffff;background-color:#ffffff;margin:0px aut=
+o;max-width:600px">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"background:#ffffff;background-color:#fffff=
+f;width:100%">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:0px;padding-bot=
+tom:30px;text-align:center">
+             =20
+              <div class=3D"m_2806271857341301428mj-column-per-88" style=3D"=
+font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-al=
+ign:top;width:100%">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"background-color:#000000;border-radius:15px;verti=
+cal-align:top" width=3D"100%">
+                  <tbody><tr>
+                    <td align=3D"center" class=3D"m_2806271857341301428cente=
+r-content" style=3D"font-size:0px;padding:10px 25px;padding-right:25px;paddi=
+ng-left:25px;word-break:break-word">
+                      <div style=3D"font-family:Ubuntu,Helvetica,Arial,sans-=
+serif;font-size:14px;line-height:1;text-align:center;color:#ffffff"><strong>=
+ Sie k=C3=B6nnen auch direkt mit der 'Antworten'-Funktion Ihres E-Mail-Progr=
+amms antworten. </strong></div>
+                    </td>
+                  </tr>
+                </tbody></table>
+              </div>
+             =20
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   =20
+    <div style=3D"margin:0px auto;max-width:600px">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"width:100%">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px 0;text-ali=
+gn:center">
+             =20
+              <div class=3D"m_2806271857341301428mj-column-per-100" style=3D=
+"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-a=
+lign:top;width:100%">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"vertical-align:top" width=3D"100%">
+                  <tbody><tr>
+                    <td align=3D"left" style=3D"font-size:0px;padding:10px 2=
+5px;padding-right:25px;padding-left:25px;word-break:break-word">
+                      <div style=3D"font-family:Ubuntu,Helvetica,Arial,sans-=
+serif;font-size:15px;line-height:2;text-align:left;color:#555555"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align=3D"center" class=3D"m_2806271857341301428socia=
+l-icons" style=3D"font-size:0px;padding:10px 25px;word-break:break-word">
+                     =20
+                      <table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"float:none;display:inline-=
+table">
+                        <tbody><tr>
+                          <td style=3D"padding:18px">
+                            <table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"background:#939da8;border-radius:3px;=
+width:30px">
+                              <tbody><tr>
+                                <td style=3D"font-size:0;height:30px;vertica=
+l-align:middle;width:30px">
+                                  <a href=3D"https://www.facebook.com/sharer=
+/sharer.php?u=3Dhttps://www.oabat.de" target=3D"_blank">
+                                    <img height=3D"30" src=3D"https://www.ma=
+iljet.com/images/theme/v1/icons/ico-social/facebook.png" style=3D"border-rad=
+ius:3px;display:block" width=3D"30" data-unique-identifier=3D"">
+                                  </a>
+                                </td>
+                              </tr>
+                            </tbody></table>
+                          </td>
+                        </tr>
+                      </tbody></table>
+                     =20
+                      <table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"float:none;display:inline-=
+table">
+                        <tbody><tr>
+                          <td style=3D"padding:18px">
+                            <table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"background:#939da8;border-radius:3px;=
+width:30px">
+                              <tbody><tr>
+                                <td style=3D"font-size:0;height:30px;vertica=
+l-align:middle;width:30px">
+                                  <a href=3D"https://www.instagram.com/oabat=
+" target=3D"_blank">
+                                    <img height=3D"30" src=3D"https://www.ma=
+iljet.com/images/theme/v1/icons/ico-social/instagram.png" style=3D"border-ra=
+dius:3px;display:block" width=3D"30" data-unique-identifier=3D"">
+                                  </a>
+                                </td>
+                              </tr>
+                            </tbody></table>
+                          </td>
+                        </tr>
+                      </tbody></table>
+                     =20
+                      <table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"float:none;display:inline-=
+table">
+                        <tbody><tr>
+                          <td style=3D"padding:18px">
+                            <table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"background:#939da8;border-radius:3px;=
+width:30px">
+                              <tbody><tr>
+                                <td style=3D"font-size:0;height:30px;vertica=
+l-align:middle;width:30px">
+                                  <a href=3D"https://twitter.com/home?status=
+=3Dhttps://www.oabat.de" target=3D"_blank">
+                                    <img height=3D"30" src=3D"https://www.ma=
+iljet.com/images/theme/v1/icons/ico-social/twitter.png" style=3D"border-radi=
+us:3px;display:block" width=3D"30" data-unique-identifier=3D"">
+                                  </a>
+                                </td>
+                              </tr>
+                            </tbody></table>
+                          </td>
+                        </tr>
+                      </tbody></table>
+                     =20
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align=3D"center" style=3D"font-size:0px;padding:10px=
+ 25px;padding-right:25px;padding-left:25px;word-break:break-word">
+                      <div style=3D"font-family:Ubuntu,Helvetica,Arial,sans-=
+serif;font-size:12px;line-height:1.4;text-align:center;color:#939da8">copyri=
+ght 2022 Oabat GmbH <br> Innstra=C3=9Fe 69b, 94032 Passau, Deutschland <br> H=
+andelsregister: HRB 10474 <br> Vertretungsberechtigte Personen: Nikolas Adja=
+n, Veit Heller <br></div>
+                    </td>
+                  </tr>
+                </tbody></table>
+              </div>
+             =20
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   =20
+  </div>
+</div>
+
+
+</div></div></div>
+</div></blockquote></body></html>=
+
+--Apple-Mail-8F2AC4E0-13AB-44B7-BF40-2EBA8B821690--
